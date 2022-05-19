@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Todo;
+use App\Models\Category;
 
 class TodosController extends Controller
 {
@@ -17,11 +18,13 @@ class TodosController extends Controller
 
     public function store(Request $request) {        
         $request -> validate([
-            'title' => 'required|min:3' //Validado a minimo de tres caracteres
+            'title' => 'required|min:3', //Validado a minimo de tres caracteres            
+            'category_id' => 'required'
         ]);
         
         $todo = new Todo;        
         $todo->title = $request->title;
+        $todo->category_id = $request->category_id;
         $todo->save();                    
         
         return redirect()->route('todos')->with('success', 'Se guardó el todo');                
@@ -29,8 +32,8 @@ class TodosController extends Controller
 
     public function index(){
         $todos = Todo::all();
-
-        return view('todos.index', ['todos'=> $todos]);
+        $categories = Category::all();
+        return view('todos.index', ['todos'=> $todos, 'categories' => $categories]);
     }
 
     public function show($id){
@@ -40,16 +43,21 @@ class TodosController extends Controller
     }
 
     public function update(Request $request, $id){
+
+        //dd($request); para mostrar informacion de la variable ingresada en pantalla
+
         $todo = Todo::find($id);
 
         $todo->title = $request->title;
 
-        dd($todo);
+        $todo->update();
         
-        return 'Se debio actualizar';
+        return redirect()->route('todos')->with('success', 'Tarea actualizada');                
     }
 
-    public function destroy(){
-        
+    public function destroy($id){
+        $todo = Todo::find($id)->delete();        
+
+        return redirect()->route('todos')->with('success', 'Tarea eliminada con éxito');
     }
 }

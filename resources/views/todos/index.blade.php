@@ -16,12 +16,18 @@
                 <h6 class="alert alert-danger">
                     {{ $message }}
                 </h6>                
-            @endif
-            <div class="form-group">
-                <label for="title">Title</label>
+            @enderror
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
                 <input type="text" name="title" class="form-control" id="title" placeholder="Ingresa título" />
-            </div>
-            <br>    
+            </div>     
+            <label for="category_id" class="form-label">Categoria de la tarea</label>
+            <select name="category_id" class="form-select">
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+            <br>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form> 
         
@@ -32,9 +38,9 @@
                         <a href="{{ route('todos-show', ['id' => $todo->id])  }}">{{ $todo->title }}</a>
                     </div>
                     <div class="col-md-3 d-flex justify-content-end">
-                        <form action="{{ route('todos-destroy', [$todo->id]) }}" method="POST">
-                            @method('DELETE')
+                        <form action="{{ route('todos-destroy', ['id' => $todo->id]) }}" method="POST">
                             @csrf
+                            @method('DELETE')                            
                             <button class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                     </div>

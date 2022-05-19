@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('todos', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->bigInteger('category_id')->unsigned();
-            $table->timestamps();
+        Schema::table('todos', function (Blueprint $table) {            
+            $table
+                ->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->after('title');
         });
     }
 
@@ -28,6 +29,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('todos');
+        Schema::table('todos', function (Blueprint $table) {
+            //
+        });
     }
 };

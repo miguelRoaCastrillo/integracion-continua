@@ -3,9 +3,9 @@
 @section('content')
 
     <div class="container w-25 border p-4 mt-4">
-        <form action="{{ route('todos-update', ['id' => $todo->id]) }}">
+        <form action="{{ route('todos-update', ['id'=>$todo->id]) }}" method="POST">
             @csrf 
-            @method('PATCH')            
+            @method('PATCH')
             @if (session('success'))
                 <h6 class="alert alert-success">
                     {{ session('success') }}
