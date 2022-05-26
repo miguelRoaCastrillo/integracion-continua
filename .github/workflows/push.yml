@@ -1,0 +1,34 @@
+# Este es un comentario en YAML
+
+# Los archivos YAML pueden crearse como .yml o como .yaml
+
+# La estructura de los archivos YAML son parecidos a los JSON
+# solo que de cierto modo, puede llegar a ser un poco mas ordenado
+
+# Para listar dentro de una variable, se hace con el - luego de un enter y una identacion
+# Ejemplo:
+# Lista de hobbies:
+#   - Musica
+#   - VerPeliculas
+#   - SalirACaminar
+#
+# Tambien se puede hacer en un arreglo de la manera tradicional
+# Arreglo: ["uno", "dos", "tres"]
+
+# on: push
+# name: deploy
+# jobs: 
+#   deploy:
+#     name: deploy to cluster
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@master
+#     - name: build and push to docker
+#     uses: docker/build-push-action@v1
+#     with:
+#       username: ${{ secrets.DOCKER_USERNAME }} # Hay que modiciar los "Secrets" dentro de github, para usar esta información
+#       password: ${{ secrets.DOCKER_PASSWORD }}
+#       repository: ${{ github.repository }} # Nombre del repositorio de github
+#       tag_with_ref: true
+#       tag_with_sha: true
+#       tags: ${{ github.sha }} # Usa el sha de github
